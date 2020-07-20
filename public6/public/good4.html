@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css">
+<link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
+
+<script>
+	function convertCurrency(){
+    var source = document.getElementById("source").value;
+    var destination = document.getElementById("destination").value;
+
+    //Create new obj of httprequest
+    var xmlreq = new XMLHttpRequest();
+
+    
+    /* https://data.fixer.io/api/latest?access_key=e8f49ec75436655e7571477c69d5bc48&symbols= */
+    var url = "https://api.exchangeratesapi.io/latest?symbols=" + source + "," + destination;
+    
+    xmlreq.open("GET",url,true);
+    xmlreq.send();
+
+    xmlreq.onreadystatechange = function () {
+
+        if (xmlreq.readyState == 4    &&    xmlreq.status == 200) {
+
+            var result = xmlreq.responseText;   //Get the response
+            var jsResult = JSON.parse(result);  //Parse it 
+            var oneUnit = jsResult.rates[destination] / jsResult.rates[source];
+
+            var amt = document.getElementById("source-text").value;
+            document.getElementById("destination-text").value = (oneUnit * amt).toFixed(2);
+        }
+    } 
+}
+
+</script>
+
+<style>
+	body {
+                                            
+    background: linear-gradient(to right, bisque, bisque);
+
+
+}
+h5 {
+	text-align: center; color:black; font-size: 50px;
+}
+
+
+.form-control {
+	color:black; font-size: 20px;
+}
+
+#source {
+	height:100%;
+}
+
+#destination {
+	height:100%;
+}
+
+.card-body {
+  border: 9px solid black;
+}
+
+.container {
+	height:400px;
+}
+
+input[type=submit] {
+  height : 500%;	
+  width: 100%;  
+  font-size:20px;
+  padding: 8 0 20px 0px;
+  margin: 10px 0;
+  box-sizing: border-box;
+  background-color: bisque;
+  color: black;
+  border: 7px solid #111;
+  box-shadow:inset 0 0 13px #888;
+  border-radius: 15px;
+  cursor: pointer;
+}
+input[type=submit]:hover {background-color: green}
+
+</style>
+
+ <title>Currency Converter</title>
+</head>
+<body onload="convertCurrency();">
+    <div class="container">
+        <div class="row">
+            <div class="card p-3 mt-5 mx-auto">
+                <div class="card-body">
+                    <h5 class="text-center mb-5 text-dark">Currency Converter</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" id="source-text" class="form-control" placeholder="Enter Amount" onkeyup="convertCurrency();">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            <select name="source" id="source" class="form-control" onchange="convertCurrency();">
+                                <option value="">Select Source Currency</option>
+                                <option value="AUD">Australia Dollar</option>
+								<option value="BRL">Brazil Real</option>
+								<option value="GBP">British Pound</option>
+								<option value="BGN">Bulgaria Lev</option>
+								<option value="CAD">Canada Dollar</option>
+								<option value="CNY">China Yuan Renminbi</option>
+								<option value="HRK">Croatia Kuna</option>
+								<option value="CZK">Czech Republic Koruna</option>
+								<option value="DKK">Denmark Krone</option>
+								<option value="HKD">Hong Kong Dollar</option>
+								<option value="HUF">Hungary Forint</option>
+								<option value="IDR">Indonesia Rupiah</option>
+								<option value="INR">India Rupee</option>
+								<option value="ISK">Iceland Krona</option>
+								<option value="ILS">Israel Shekel</option>
+								<option value="JPY">Japan Yen</option>
+								<option value="MYR">Malaysia Ringgit</option>
+								<option value="MXN">Mexico Peso</option>
+								<option value="NZD">New Zealand Dollar</option>
+								<option value="NOK">Norway Krone</option>
+								<option value="PHP">Philippines Peso</option>
+								<option value="PLN">Poland Zloty</option>
+								<option value="RON">Romania Leu</option>
+								<option value="RUB">Russia Ruble</option>
+								<option value="SGD">Singapore Dollar</option>
+								<option value="ZAR">South Africa Rand</option>
+								<option value="KRW">South Korea Won</option>
+								<option value="SEK">Sweden Krona</option>
+								<option value="CHF">Switzerland Franc</option>
+								<option value="THB">Thailand Baht</option>
+								<option value="TRY">Turkey Lira</option>
+								<option value="USD">United States Dollar</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" id="destination-text" class="form-control" placeholder="Converted Amount is" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <select name="destination" id="destination" class="form-control" onchange="convertCurrency();" >
+                                    <option value="">Select Destination Currency</option>
+                                <option value="AUD">Australia Dollar</option>
+								<option value="BRL">Brazil Real</option>
+								<option value="GBP">British Pound</option>
+								<option value="BGN">Bulgaria Lev</option>
+								<option value="CAD">Canada Dollar</option>
+								<option value="CNY">China Yuan Renminbi</option>
+								<option value="HRK">Croatia Kuna</option>
+								<option value="CZK">Czech Republic Koruna</option>
+								<option value="DKK">Denmark Krone</option>
+								<option value="HKD">Hong Kong Dollar</option>
+								<option value="HUF">Hungary Forint</option>
+								<option value="IDR">Indonesia Rupiah</option>
+								<option value="INR">India Rupee</option>
+								<option value="ISK">Iceland Krona</option>
+								<option value="ILS">Israel Shekel</option>
+								<option value="JPY">Japan Yen</option>
+								<option value="MYR">Malaysia Ringgit</option>
+								<option value="MXN">Mexico Peso</option>
+								<option value="NZD">New Zealand Dollar</option>
+								<option value="NOK">Norway Krone</option>
+								<option value="PHP">Philippines Peso</option>
+								<option value="PLN">Poland Zloty</option>
+								<option value="RON">Romania Leu</option>
+								<option value="RUB">Russia Ruble</option>
+								<option value="SGD">Singapore Dollar</option>
+								<option value="ZAR">South Africa Rand</option>
+								<option value="KRW">South Korea Won</option>
+								<option value="SEK">Sweden Krona</option>
+								<option value="CHF">Switzerland Franc</option>
+								<option value="THB">Thailand Baht</option>
+								<option value="TRY">Turkey Lira</option>
+								<option value="USD">United States Dollar</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/js/bootstrap.min.js"></script>
+
+<form action="index.html">
+  <input type="submit" value="BACK">
+</form></div></div>
+
+</body>
+</html>
